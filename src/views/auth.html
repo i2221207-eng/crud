@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación - CRUD Romi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Script de redirección de autenticación -->
+    <script src="/js/auth-redirect.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+        .auth-container:hover {
+            transform: translateY(-5px);
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-header h2 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .auth-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .toggle-form {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .toggle-form a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .toggle-form a:hover {
+            color: #764ba2;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+        .loading {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Formulario de Login -->
+        <div id="loginForm">
+            <div class="auth-header">
+                <h2><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
+                <p>Accede a tu cuenta para gestionar el sistema</p>
+            </div>
+            
+            <div id="loginAlert"></div>
+            
+            <form id="formLogin">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="loginUsername" placeholder="Usuario" required>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">
+                    <span class="loading"><i class="fas fa-spinner fa-spin"></i> Iniciando...</span>
+                    <span class="normal"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</span>
+                </button>
+            </form>
+            
+            <div class="toggle-form">
+                <p>¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+            </div>
+        </div>
+        
+        <!-- Formulario de Registro -->
+        <div id="registerForm" style="display: none;">
+            <div class="auth-header">
+                <h2><i class="fas fa-user-plus"></i> Registro</h2>
+                <p>Crea tu cuenta para acceder al sistema</p>
+            </div>
+            
+            <div id="registerAlert"></div>
+            
+            <form id="formRegister">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="registerUsername" placeholder="Usuario" required>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="registerPassword" placeholder="Contraseña" required>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmar Contraseña" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100">
+                    <span class="loading"><i class="fas fa-spinner fa-spin"></i> Registrando...</span>
+                    <span class="normal"><i class="fas fa-user-plus"></i> Registrarse</span>
+                </button>
+            </form>
+            
+            <div class="toggle-form">
+                <p>¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Alternar entre formularios
+        document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            clearAlerts();
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            clearAlerts();
+        });
+
+        // Limpiar alertas
+        function clearAlerts() {
+            document.getElementById('loginAlert').innerHTML = '';
+            document.getElementById('registerAlert').innerHTML = '';
+        }
+
+        // Mostrar alerta
+        function showAlert(containerId, message, type = 'danger') {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.getElementById(containerId).innerHTML = alertHtml;
+        }
+
+        // Manejar loading state
+        function setLoading(formId, isLoading) {
+            const form = document.getElementById(formId);
+            const button = form.querySelector('button[type="submit"]');
+            const loading = button.querySelector('.loading');
+            const normal = button.querySelector('.normal');
+            
+            if (isLoading) {
+                loading.style.display = 'inline';
+                normal.style.display = 'none';
+                button.disabled = true;
+            } else {
+                loading.style.display = 'none';
+                normal.style.display = 'inline';
+                button.disabled = false;
+            }
+        }
+
+        // Manejar registro
+        document.getElementById('formRegister').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            clearAlerts();
+            
+            // Validar contraseñas
+            if (password !== confirmPassword) {
+                showAlert('registerAlert', 'Las contraseñas no coinciden');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('registerAlert', 'La contraseña debe tener al menos 6 caracteres');
+                return;
+            }
+            
+            setLoading('formRegister', true);
+            
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('registerAlert', 'Usuario registrado exitosamente. Ahora puedes iniciar sesión.', 'success');
+                    setTimeout(() => {
+                        document.getElementById('showLogin').click();
+                    }, 2000);
+                } else {
+                    showAlert('registerAlert', data.message || 'Error al registrar usuario');
+                }
+            } catch (error) {
+                showAlert('registerAlert', 'Error de conexión. Intenta nuevamente.');
+            } finally {
+                setLoading('formRegister', false);
+            }
+        });
+
+        // Manejar login
+        document.getElementById('formLogin').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            clearAlerts();
+            setLoading('formLogin', true);
+            
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Guardar token
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.user.username);
+                    
+                    showAlert('loginAlert', 'Inicio de sesión exitoso. Redirigiendo...', 'success');
+                    
+                    // Redirigir al CRUD
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    showAlert('loginAlert', data.message || 'Credenciales incorrectas');
+                }
+            } catch (error) {
+                showAlert('loginAlert', 'Error de conexión. Intenta nuevamente.');
+            } finally {
+                setLoading('formLogin', false);
+            }
+        });
+
+        // Verificar si ya está autenticado
+        window.addEventListener('load', function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                // Si ya tiene token, redirigir al CRUD
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

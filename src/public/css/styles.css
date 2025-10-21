@@ -1,0 +1,294 @@
+/* Estilos personalizados para la aplicación */
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 15px 15px 0 0 !important;
+  border: none;
+}
+
+.producto-card {
+  transition: transform 0.3s;
+  height: 100%;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.producto-imagen {
+  height: 200px;
+  object-fit: cover;
+}
+
+.carousel-item img {
+  height: 300px;
+  object-fit: contain;
+}
+
+.categoria-link {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.categoria-link:hover {
+  background-color: #f0f0f0;
+}
+
+.categoria-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Estilos para miniaturas de imágenes */
+#contenedorMiniaturas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.miniatura-imagen {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.miniatura-imagen:hover {
+  border-color: #667eea;
+  transform: scale(1.05);
+}
+
+.miniatura-imagen.active {
+  border-color: #667eea;
+}
+
+/* Estilos para la imagen principal del producto */
+.producto-img {
+  height: 200px;
+  object-fit: contain;
+  padding: 10px;
+}
+
+/* Estilos para el formulario de producto */
+#imagenPreview img {
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+/* Estilos para las alertas */
+.alert {
+  z-index: 1100;
+}
+#contenedorMiniaturas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#contenedorMiniaturas .img-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  transition: all 0.2s;
+}
+
+#contenedorMiniaturas .img-thumbnail:hover {
+  border-color: #667eea;
+  transform: scale(1.05);
+}
+
+.btn-floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para navbar */
+.navbar-dark {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  position: relative;
+  z-index: 1030;
+}
+
+.navbar {
+  position: relative;
+  z-index: 1030;
+}
+
+/* Estilos para dropdown del usuario */
+.dropdown-menu {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  z-index: 9999 !important;
+  position: absolute !important;
+}
+
+/* Asegurar que el dropdown toggle tenga z-index alto */
+.nav-item.dropdown {
+  position: relative;
+  z-index: 9998;
+}
+
+.dropdown-toggle {
+  position: relative;
+  z-index: 9998;
+}
+
+.dropdown-item {
+  color: #333 !important;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-radius: 5px;
+}
+
+.dropdown-header {
+  color: #667eea !important;
+  font-weight: 600;
+}
+
+.dropdown-toggle::after {
+  margin-left: 0.5em;
+}
+
+/* Estilos para botones */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(246, 173, 85, 0.4);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(252, 129, 129, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(160, 174, 192, 0.4);
+}
+
+/* Estilos para formularios */
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Estilos para modales */
+.modal-content {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-radius: 15px 15px 0 0 !important;
+  border: none;
+}
+
+/* Container principal */
+.container {
+  position: relative;
+  z-index: 1;
+}
