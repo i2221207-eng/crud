@@ -1,18 +1,16 @@
-const mysql = require('mysql2');
-require('dotenv').config();
+const { Pool } = require('pg');
 
-// Crear conexión a la base de datos
-const pool = mysql.createPool({
+const pool = new Pool({
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+  ssl: { rejectUnauthorized: false }
 });
 
-// Convertir a promesas para usar async/await
-const promisePool = pool.promise();
+pool.connect()
+  .then(() => console.log('✅ Conectado a PostgreSQL en Render'))
+  .catch(err => console.error('❌ Error al conectar con la base de datos:', err));
 
-module.exports = promisePool;
+module.exports = pool;
