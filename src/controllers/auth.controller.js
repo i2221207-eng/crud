@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // guardar en la BD
-    await db.query("INSERT INTO usuarios (username, password) VALUES (?, ?)", [
+    await db.query("INSERT INTO usuarios (username, password) VALUES ($1, $2)", [
       username,
       hashedPassword,
     ]);
@@ -26,7 +26,7 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const [rows] = await db.query("SELECT * FROM usuarios WHERE username = ?", [username]);
+    const [rows] = await db.query("SELECT * FROM usuarios WHERE username = $1", [username]);
     const user = rows[0];
 
     if (!user) return res.status(400).json({ message: "Usuario no encontrado" });
